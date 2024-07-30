@@ -1,6 +1,7 @@
 package com.oitavarosado.medical_clinic_manegment_system.domain.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +27,7 @@ public class Patient implements Serializable{
 	@Column( nullable=false)
 	private String genero;
 	@Column( nullable=false)
-	private String dataNascimento;
+	private LocalDate dataNascimento;
 	@Column(unique=true, nullable=false)
 	private String cpf;
 	@Column(unique=true, nullable=false)
@@ -73,10 +74,10 @@ public class Patient implements Serializable{
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
-	public String getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public String getCpf() {

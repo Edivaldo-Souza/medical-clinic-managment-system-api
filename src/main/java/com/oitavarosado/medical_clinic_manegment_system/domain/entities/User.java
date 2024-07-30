@@ -1,6 +1,7 @@
 package com.oitavarosado.medical_clinic_manegment_system.domain.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +28,9 @@ public class User implements Serializable{
 	private String senha;
 	@Column(unique=true, nullable=false)
 	private String email;
+	private String resetToken;
+	private LocalDateTime resetTokenCreatedAt;
+	private LocalDateTime resetTokenExpiresAt;
 	
 	public long getId() {
 		return id;
@@ -57,6 +61,24 @@ public class User implements Serializable{
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getResetToken() {
+		return resetToken;
+	}
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+	public LocalDateTime getResetTokenCreatedAt() {
+		return resetTokenCreatedAt;
+	}
+	public void setResetTokenCreatedAt(LocalDateTime resetTokenCreatedAt) {
+		this.resetTokenCreatedAt = resetTokenCreatedAt;
+	}
+	public LocalDateTime getResetTokenExpiresAt() {
+		return resetTokenExpiresAt;
+	}
+	public void setResetTokenExpiresAt(LocalDateTime resetTokenExpiresAt) {
+		this.resetTokenExpiresAt = resetTokenExpiresAt;
 	}
 	
 }

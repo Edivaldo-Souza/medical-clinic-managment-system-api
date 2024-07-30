@@ -43,8 +43,20 @@ public class SecurityConfig {
 		.csrf((crsf)->crsf.disable())
 		.authorizeHttpRequests((requests)->{
 			
-			requests.requestMatchers(HttpMethod.POST,"api/user").permitAll()
+			requests.requestMatchers(HttpMethod.POST,
+					"api/user",
+					"api/password/send",
+					"api/password/verify",
+					"api/password/reset")
+					.permitAll()
+					.requestMatchers(HttpMethod.GET,
+					"/swagger-ui/**",
+					"/swagger-ui.html",
+					"/v3/**",
+					"/favicon.ico")
+					.permitAll()
 					.anyRequest().authenticated();
+			
 		
 		})
 		.addFilterBefore(new LoginFilter("/api/login",authManager),UsernamePasswordAuthenticationFilter.class)

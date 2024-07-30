@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,8 @@ import com.oitavarosado.medical_clinic_manegment_system.api.dto.AppointmentDTO;
 import com.oitavarosado.medical_clinic_manegment_system.domain.entities.Appointment;
 import com.oitavarosado.medical_clinic_manegment_system.domain.services.AppointmentService;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import jakarta.validation.Valid;
 
 @RestController
@@ -33,7 +36,10 @@ public class AppointmentController {
 	private ModelMapper mapper;
 	
 	@GetMapping
-	public List<AppointmentDTO> getAll(){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public List<AppointmentDTO> getAll(@RequestHeader(value = "Authorization") String authorization){
 		List<AppointmentDTO> patients = new ArrayList<AppointmentDTO>();
 		for(Appointment p : service.getAll()) {
 			patients.add(mapper.map(p, AppointmentDTO.class));
@@ -42,7 +48,12 @@ public class AppointmentController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<AppointmentDTO> get(@PathVariable UUID id){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public ResponseEntity<AppointmentDTO> get(
+			@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable UUID id){
 		Appointment patient = service.getAt(id);
 		if(patient!=null) {
 			AppointmentDTO newDto = mapper.map(patient, AppointmentDTO.class);
@@ -54,7 +65,12 @@ public class AppointmentController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AppointmentDTO> post(@Valid @RequestBody AppointmentDTO dto){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public ResponseEntity<AppointmentDTO> post(
+			@RequestHeader(value = "Authorization") String authorization,
+			@Valid @RequestBody AppointmentDTO dto){
 		Appointment appointment = service.create(
 				mapper.map(dto, Appointment.class),
 				dto.getPaciente().getUuid(),
@@ -71,7 +87,12 @@ public class AppointmentController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<AppointmentDTO> put(@Valid @RequestBody AppointmentDTO dto){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public ResponseEntity<AppointmentDTO> put(
+			@RequestHeader(value = "Authorization") String authorization,
+			@Valid @RequestBody AppointmentDTO dto){
 		Appointment patient = service.update(mapper.map(dto, Appointment.class));
 		if(patient!=null) {
 			AppointmentDTO newDto = mapper.map(patient, AppointmentDTO.class);
@@ -84,7 +105,12 @@ public class AppointmentController {
 	}
 	
 	@PatchMapping
-	public ResponseEntity<AppointmentDTO> patch(@RequestBody AppointmentDTO dto){
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public ResponseEntity<AppointmentDTO> patch(
+			@RequestHeader(value = "Authorization") String authorization,
+			@RequestBody AppointmentDTO dto){
 		Appointment patient = service.updatePatch(mapper.map(dto, Appointment.class));
 		if(patient!=null) {
 			AppointmentDTO newDto = mapper.map(patient, AppointmentDTO.class);
@@ -97,7 +123,12 @@ public class AppointmentController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public String delete(@PathVariable UUID id) {
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "Authorization", value = "Bearer token", required = true, dataType = "string", paramType = "header")
+	})
+	public String delete(
+			@RequestHeader(value = "Authorization") String authorization,
+			@PathVariable UUID id) {
 		if(service.delete(id)) {
 			return "Agendamento removido"; 
 		}

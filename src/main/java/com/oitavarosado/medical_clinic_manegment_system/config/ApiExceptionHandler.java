@@ -26,6 +26,6 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler{
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
-		return new ResponseEntity<>("Chave duplicada: Horario de consulta ja reservado",HttpStatus.CONFLICT);
+		return new ResponseEntity<>("Horario da consulta ja reservado",HttpStatus.CONFLICT);
 	}
 }
